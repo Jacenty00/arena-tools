@@ -1,30 +1,22 @@
 # arena-tools
 A collection of tools to make working with [Arena-Rosnav-3D](https://github.com/ignc-research/arena-rosnav-3D/) easier. It currently includes:
 - Scenario Editor
-- Flatland Model Editor 
+- Flatland Model Editor
 - Map Generator (2D)
 - Map to Gazebo world converter (3D)
 
 ## Prerequisites
 - Python 3.6 or higher
+- preferably virtual environment [rosnav] from [arena-rosnav-3d](https://github.com/ignc-research/arena-rosnav-3D/tree/main/docs/Installation.md)
 
 ## Installation
-Install Python packages (preferably in your virtual environment):
+You can use the bash script to install the neccessary python packages and the git repository to enable compatibility with arena-rosnav-3d
 ```bash
-pip3 install pyqt5 numpy pyyaml lxml scikit-image Pillow scikit-image opencv-python matplotlib
-pip install PyQt5 --upgrade
+chmod +x install.sh && ./install.sh     # make script executable and execute
 ```
 
-To enable compatibility with arena-rosnav-3d run:
-```bash
-roscd arena-tools
-git clone https://gitlab.com/LIRS_Projects/LIRS-WCT lirs-wct
-cd lirs-wct
-./deploy.sh
-roscd arena-tools
-mv lirs-wct/lirs_wct_console/build/lirs_wct_console .
-```
-<!-- For converting 2D maps to Gazebo worlds we are using [LIRS_WCT](https://gitlab.com/LIRS_Projects/LIRS-WCT). Please follow their [installation guide](https://gitlab.com/LIRS_Projects/LIRS-WCT#installation) and place the lirs_wct_console executable inside your arena-tools folder to use this functionality. -->
+If you have problems with the installation, we recommend to step through the [installation script](./install.sh) by hand.
+
 # Run
 To start the gui and select your task, run:
 ```bash
@@ -48,9 +40,9 @@ https://user-images.githubusercontent.com/74921738/130034174-fa6b334b-e220-47ea-
 
 2. To convert the 2D maps into 3D Gazebo worlds:
 ![Screenshot from 2021-10-25 23-42-46](https://user-images.githubusercontent.com/41898845/138775328-6609cd98-cf5f-4942-aa3d-bcf9314a5714.png)
-Press the button **Convert existing maps into Gazebo worlds** and all of the maps in subfolder map_ will be automatically converted into Gazebo worlds, as well as their respective Pedsim scene obstacles file will be generated and placed under **simulator_setup/scenarios/ped_scenarios/map_{i}.xml**. 
+Press the button **Convert existing maps into Gazebo worlds** and all of the maps in subfolder map_ will be automatically converted into Gazebo worlds, as well as their respective Pedsim scene obstacles file will be generated and placed under **simulator_setup/scenarios/ped_scenarios/map_{i}.xml**.
 \
-When you see an output like the following in your terminal, the worlds have been successfully converted to Gazebo maps and you can close the map generator interface. 
+When you see an output like the following in your terminal, the worlds have been successfully converted to Gazebo maps and you can close the map generator interface.
     ```txt
     Loaded map in /home/usr/catkin_ws/src/arena-rosnav-3D/simulator_setup/maps/map4/map.yaml with metadata:
     {'image': 'map4.png', 'resolution': 0.5, 'origin': [0.0, 0.0, 0.0], 'negate': 0, 'occupied_thresh': 0.65, 'free_thresh': 0.196}
@@ -64,7 +56,7 @@ Now all of the maps can be used in Gazebo, have a look at [arena-rosnav-3D](http
 >- For now maps can only be converted in bulk, that is all of the **arena_tools** generated maps found in the setup folder will be converted at once.
 >- If you wish to convert a single map or be able to specify the conversion parameters, use textures refer to [LIRS_World_Construction_Tool](https://gitlab.com/LIRS_Projects/LIRS-WCT).
 
-3. To use the worlds with the arena-rosnav-3d repository, there are additional steps you need to take: 
+3. To use the worlds with the arena-rosnav-3d repository, there are additional steps you need to take:
 
     __a)__ Navigate to the newly created world file under: `arena-rosnav-3D/simulator_setup/worlds/{NAME_OF_YOUR_MAP}/worlds/{NAME_OF_YOUR_MAP}.world`\
     __b)__ add the following line somewhere between your xml world tags `<world>`:
@@ -72,7 +64,7 @@ Now all of the maps can be used in Gazebo, have a look at [arena-rosnav-3D](http
         <include>
             <uri>model://ground_plane</uri>
         </include>
-    ``` 
+    ```
     like so:
     ```xml
     <sdf version="1.4">
